@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graxa Team BJJ</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Estilos gerais */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        /* Cabeçalho */
+        header {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
+
+        header h1 {
+            font-size: 2em;
+            margin: 0;
+        }
+
+        header img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+        }
+
+        header nav ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 10px;
+        }
+
+        header nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        header nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        /* Seções */
+        section {
+            padding: 40px 20px;
+            margin: 20px 0;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        section h2 {
+            font-size: 1.8em;
+            margin-bottom: 10px;
+        }
+
+        section p {
+            font-size: 1.2em;
+            line-height: 1.6;
+        }
+
+		/* Layout do mestre */
+		.mestre-info {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			flex-wrap: wrap;  /* Garante que os itens se ajustem em telas menores */
+		}
+
+		.mestre-info img {
+			width: 30%;  /* Tamanho padrão em telas grandes */
+			border-radius: 8px;
+		}
+
+		.mestre-info div {
+			width: 65%;  /* Largura do texto */
+		}
+
+		/* Responsividade: Para telas menores, ajustamos a largura e layout */
+		@media (max-width: 768px) {
+			.mestre-info {
+				flex-direction: column; /* Organiza a imagem e o texto em uma coluna */
+				align-items: center; /* Centraliza os itens */
+			}
+
+			.mestre-info img {
+				width: 80%; /* Ajuste o tamanho da imagem para que ocupe mais espaço em telas pequenas */
+				margin-bottom: 20px; /* Adiciona um espaçamento entre a imagem e o texto */
+			}
+
+			.mestre-info div {
+				width: 100%; /* O texto ocupa toda a largura disponível */
+				text-align: center; /* Centraliza o texto */
+			}
+		}
+
+        /* Benefícios da academia */
+        .beneficios {
+            list-style: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+
+        .beneficios li {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .beneficios li::before {
+            content: "✔";
+            margin-right: 10px;
+            color: #4CAF50;
+        }
+	    
+		/* Carrossel de Parceiros */
+		#parceiros {
+			position: relative;
+			margin-top: 30px;
+			width: 100%;
+			max-width: 97%;  /* Asegura que a div não ultrapasse o tamanho do conteúdo */
+			overflow: hidden;
+		}
+
+		.carrossel {
+			display: flex;
+			justify-content: center;
+			width: 100%;
+		}
+
+		.carrossel-imagens {
+			display: flex;
+			transition: transform 0.3s ease;
+			width: 100%;
+			flex-shrink: 0; /* Evita que as imagens encolham */
+		}
+
+		.carrossel-imagens .imagem {
+			flex: 0 0 auto;
+			width: 100%; /* Ajuste o tamanho das imagens */
+			max-width: 200px; /* Tamanho fixo para as imagens */
+			margin: 0 10px;
+		}
+
+		.carrossel-imagens img {
+			width: 100%;
+			height: auto;
+			border-radius: 8px;
+			box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+		}
+
+		/* Controles de navegação (setas) */
+		.carrossel-nav {
+			position: absolute;
+			top: 50%;
+			transform: translateY(-50%);
+			z-index: 10;
+			width: 93%;
+			display: flex;
+			justify-content: space-between;
+		}
+
+		.carrossel-nav label {
+			background-color: rgba(0, 0, 0, 0.5);
+			color: white;
+			font-size: 2em;
+			padding: 10px;
+			cursor: pointer;
+			border-radius: 50%;
+			transition: background-color 0.3s;
+			width: 40px; /* Ajuste o tamanho das setas */
+			height: 40px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.carrossel-nav label:hover {
+			background-color: rgba(0, 0, 0, 0.8);
+		}
+
+		/* A seta da esquerda */
+		.carrossel-nav .left {
+			margin-left: 0; /* Ajusta a seta para a borda esquerda */
+		}
+
+		/* A seta da direita */
+		.carrossel-nav .right {
+			margin-right: 0; /* Ajusta a seta para a borda direita */
+		}
+
+		/* Controle de navegação com radio buttons (para mover o carrossel) */
+		input[type="radio"] {
+			display: none;
+		}
+
+		/* Quando um radio button é selecionado, mover o carrossel */
+		#slide1:checked ~ .carrossel .carrossel-imagens {
+			transform: translateX(0);
+		}
+
+		#slide2:checked ~ .carrossel .carrossel-imagens {
+			transform: translateX(-220px); /* Desloca para o segundo slide */
+		}
+
+		#slide3:checked ~ .carrossel .carrossel-imagens {
+			transform: translateX(-440px); /* Desloca para o terceiro slide */
+		}
+
+		#slide4:checked ~ .carrossel .carrossel-imagens {
+			transform: translateX(-660px); /* Desloca para o quarto slide */
+		}
+
+		/* Responsividade para o carrossel */
+		@media (max-width: 768px) {
+			#parceiros {
+				max-width: 93%;  /* Asegura que a div não ultrapasse o tamanho do conteúdo */
+			}
+			.carrossel-imagens .imagem {
+				max-width: 150px; /* Tamanho das imagens em telas menores */
+			}
+
+			.carrossel-nav label {
+				font-size: 1.5em;
+				padding: 8px;
+			}
+		}
+
+        /* Galeria de fotos */
+		.galeria {
+			display: flex;
+			gap: 15px;
+			justify-content: space-between;
+			margin-top: 20px;
+			flex-wrap: wrap; /* Permite que as imagens se movam para a próxima linha em telas menores */
+		}
+
+		.galeria img {
+			width: 30%;  /* Tamanho padrão em telas grandes */
+			border-radius: 8px;
+			box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+		}
+
+		/* Responsividade: Para telas menores, ajustamos a largura e layout */
+		@media (max-width: 768px) {
+			.galeria img {
+				width: 80%;  /* Aumenta a largura das imagens em telas pequenas */
+				margin-bottom: 20px; /* Adiciona espaçamento entre as imagens */
+			}
+
+			.galeria {
+				justify-content: center; /* Centraliza as imagens */
+			}
+		}
+
+        /* Seção de Contato */
+        #contato {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        #contato p {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+
+        #contato a {
+            color: #4CAF50;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        /* Ícones */
+        .icons {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .icons a {
+            color: #333;
+            font-size: 2em;
+            transition: color 0.3s;
+        }
+
+        .icons a:hover {
+            color: #4CAF50;
+        }
+
+        /* Estilo do mapa */
+        .mapa-container {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+
+        iframe {
+            border-radius: 8px;
+        }
+
+        /* Rodapé */
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Cabeçalho -->
+    <header>
+        <img src="logo.png" alt="Logo Graxa Team BJJ">
+        <h1>Graxa Team BJJ</h1>
+        <nav>
+            <ul>
+                <li><a href="#sobre">Sobre</a></li>
+                <li><a href="#espaco">Espaço</a></li>
+                <li><a href="#galeria">Galeria</a></li>
+                <li><a href="#contato">Contato</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Seção Sobre a Academia -->
+    <section id="sobre">
+        <h2>Sobre a Academia</h2>
+        <div class="mestre-info">
+            <img src="mestre.jpg" alt="Mestre da Academia">
+            <div>
+                <p>Fundada em 2024, nossa academia foi idealizada e liderada pelo mestre Luciano Conceição, faixa-preta com mais de 13 anos de experiência no Jiu Jitsu. O objetivo da academia é proporcionar a todos um ambiente seguro e acolhedor para praticar a arte marcial, com um enfoque na técnica, disciplina e respeito.</p>
+                <p>Luciano Conceição é um mestre de Manus, renomado por seu estilo de ensino, que combina o rigor técnico com a filosofia de vida que o Jiu Jitsu promove, ajudando os alunos a se desenvolverem tanto na luta quanto em suas vidas pessoais.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção Espaço da Academia -->
+    <section id="espaco">
+        <h2>Nosso Espaço</h2>
+        <p>Nosso espaço foi projetado para oferecer conforto e segurança para todos os alunos. Contamos com:</p>
+        <ul class="beneficios">
+            <li>Estacionamento gratuito para os alunos</li>
+            <li>Banheiros amplos e limpos</li>
+            <li>Tatames de alta qualidade e segurança</li>
+            <li>Aulas em diferentes horários para maior conveniência</li>
+            <li>Ambiente familiar</li>
+        </ul>
+    </section>
+
+    <!-- Galeria de Fotos -->
+    <section id="galeria">
+        <h2>Galeria</h2>
+        <div class="galeria">
+            <img src="foto1.jpg" alt="Imagem 1 da academia">
+            <img src="foto2.jpg" alt="Imagem 2 da academia">
+            <img src="foto3.jpg" alt="Imagem 3 da academia">
+        </div>
+    </section>
+
+	<!-- Carrossel de Parceiros -->
+	<section id="parceiros">
+		<h2>Parceiros</h2>
+		
+		<!-- Controles de navegação (input radios) -->
+		<input type="radio" id="slide1" name="carrossel" checked>
+		<input type="radio" id="slide2" name="carrossel">
+		<input type="radio" id="slide3" name="carrossel">
+		<input type="radio" id="slide4" name="carrossel">
+
+		<!-- Carrossel -->
+		<div class="carrossel">
+			<div class="carrossel-imagens">
+				<div class="imagem">
+					<img src="parceiro1.png" alt="Parceiro 1">
+				</div>
+				<div class="imagem">
+					<img src="parceiro2.png" alt="Parceiro 2">
+				</div>
+				<div class="imagem">
+					<img src="parceiro3.png" alt="Parceiro 3">
+				</div>
+				<div class="imagem">
+					<img src="parceiro4.png" alt="Parceiro 4">
+				</div>
+				
+								<div class="imagem">
+					<img src="parceiro1.png" alt="Parceiro 1">
+				</div>
+				<div class="imagem">
+					<img src="parceiro2.png" alt="Parceiro 2">
+				</div>
+				<div class="imagem">
+					<img src="parceiro3.png" alt="Parceiro 3">
+				</div>
+				<div class="imagem">
+					<img src="parceiro4.png" alt="Parceiro 4">
+				</div>
+			</div>
+		</div>
+
+		<!-- Setas de navegação -->
+		<div class="carrossel-nav">
+			<label for="slide1" class="left">&#10094;</label>
+			<label for="slide4" class="right">&#10095;</label>
+		</div>
+	</section>
+
+
+    <!-- Seção de Contato -->
+    <section id="contato">
+        <h2>Contato</h2>
+        <p>Fale conosco pelo WhatsApp ou pelas redes sociais!</p>
+        <p><strong>WhatsApp:</strong> <a href="https://wa.me/5541996202309" target="_blank">Clique para enviar mensagem</a></p>
+        <p><strong>Instagram:</strong> <a href="https://www.instagram.com/graxateam.bjj" target="_blank">@graxateam.bjj</a></p>
+
+        <!-- Ícones de redes sociais -->
+        <div class="icons">
+            <a href="https://wa.me/5541996202309" target="_blank">
+                <i class="fab fa-whatsapp"></i> <!-- Ícone do WhatsApp -->
+            </a>
+            <a href="https://www.instagram.com/graxateam.bjj" target="_blank">
+                <i class="fab fa-instagram"></i> <!-- Ícone do Instagram -->
+            </a>
+        </div>
+
+        <!-- Google Maps Iframe -->
+        <div class="mapa-container">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3600.687358912032!2d-49.16689089879924!3d-25.51547134455346!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94dcf0de7d117ed5%3A0xb3bd8a1c229dddd1!2sR.%20Eucl%C3%ADdes%20Batista%20de%20Oliveira%2C%20248%20-%20In%C3%A1%2C%20S%C3%A3o%20Jos%C3%A9%20dos%20Pinhais%20-%20PR%2C%2083065-490!5e0!3m2!1spt-PT!2sbr!4v1735526459421!5m2!1spt-PT!2sbr" width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+    </section>
+
+    <!-- Rodapé -->
+    <footer>
+        <p>&copy; 2024 Graxa Team BJJ - Todos os direitos reservados</p>
+    </footer>
+
+</body>
+</html>
